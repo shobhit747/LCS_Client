@@ -1,0 +1,28 @@
+<div class="connectToServer" id="conncetToServer">
+    <p class="connectToServerHeading">
+        Connect to your self hosted<br>cloud server.
+    </p>
+    <form onsubmit="return false" id="connectToServerForm">
+        <div class="styleInputOne">
+            <p class="p-1">Ip Address</p>
+            <p class="p-2">:</p>
+            <input type="text" name="ipAddress" value="192.168.29.59" required>
+        </div>
+        <div class="styleInputOne">
+            <p class="p-1">Port</p>
+            <p class="p-2">:</p>
+            <input type="text" name="port" value="8000" required>
+        </div>
+        <div class="styleInputOne">
+            <p class="p-1">Password</p>
+            <p class="p-2">:</p>
+            <input type="password" name="password">
+        </div>
+        <button class="button_style_two" style="margin-top: 40px;" type="submit" id="submitServerInfo">
+            <p>Connect</p>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M28.5334 10C29.6 11.0667 29.6 12.8 28.5334 13.7333L24.8 17.4667L14.4 7.06667L18.1334 3.33334C19.2 2.26667 20.9334 2.26667 21.8667 3.33334L24.2667 5.73334L28.2667 1.73334L30.1334 3.6L26.1334 7.6L28.5334 10ZM20.8 17.7333L18.9334 15.8667L15.2 19.6L12.4 16.8L16.1334 13.0667L14.2667 11.2L10.5334 14.9333L8.53337 13.0667L4.80003 16.8C3.73337 17.8667 3.73337 19.6 4.80003 20.5333L7.20003 22.9333L1.8667 28.2667L3.73337 30.1333L9.0667 24.8L11.4667 27.2C12.5334 28.2667 14.2667 28.2667 15.2 27.2L18.9334 23.4667L17.0667 21.6L20.8 17.7333Z" fill="#757575"/>
+            </svg>
+        </button>        
+    </form>
+</div>

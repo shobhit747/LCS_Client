@@ -1,0 +1,23 @@
+.connectToServer{
+    width: 50%;
+    justify-self: center;
+    margin: 12vh auto 0 auto;
+
+}
+
+.connectToServer .connectToServerHeading{
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+.connectToServer form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-self: center;
+    width: min-content;
+    /* font-size: 14px; */
+}
+/* .connectToServer form .button_style_one{
+    margin-top: 40px;
+} */
