@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog,session } = require('electron');
 const path = require('node:path');
 const http = require('http');
 const { default: axios, head } = require('axios');
@@ -55,6 +55,18 @@ const client = wrapper(axios.create({
   jar
 }));
 
+app.whenReady().then(()=>{
+  session.defaultSession.webRequest.onBeforeSendHeaders({urls : ['*://*/file/*']},(details,callback)=>{
+    jar.getCookieString(details.url,(err,result)=>{
+      if(err){throw err};
+      details.requestHeaders['Cookie'] = result;  
+    });
+    callback({requestHeaders : details.requestHeaders });
+  })
+}).catch(err =>{
+  console.log(err);
+})
+
 ipcMain.on('connectToServer',(event,data)=>{
   client.defaults.baseURL = `http://${data.ipAddress}:${data.port}`;
 
@@ -62,16 +74,19 @@ ipcMain.on('connectToServer',(event,data)=>{
     'connection' : 'keep-alive',
   }
 
-  client.get(`/`,{headers : headers})
+  // client.get(`/`,{headers : headers})
+  client.post('/',{passwrd : data.password},{headers : headers})
   .then((res)=>{
     // console.log(res.headers);
-    
     event.reply('connectToServerReply',res.data.directoryInfo,res.data.storageInfo,res.data.currentPath,`${data.ipAddress}:${data.port}`);
   }).catch((err)=>{
-    console.log(err);
+    let message = 'cannot connect to server';
+    if(err.status == 401){
+      message = 'Incorrect password';
+    }
     
     event.reply('replyInPopUp',{
-      message : 'cannot connect to server',
+      message : message,
       nature : 'error'
     })
   })
