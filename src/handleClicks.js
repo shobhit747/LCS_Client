@@ -44,7 +44,10 @@ document.getElementById('mainSection').addEventListener('click', (event) =>{
             window.electronAPI.send('upload',operationInfo);
         }
         else if(buttonClicked.id == 'download'){
-
+            let operationInfo = {
+                fileName : buttonClicked.getAttribute('path'),
+            }
+            window.electronAPI.send('download',operationInfo);
         }
         else if(buttonClicked.id == 'delete'){
 
@@ -108,7 +111,11 @@ document.getElementById('mainSection').addEventListener('contextmenu',(event)=>{
             changeSection('fileOptions.html','optionButtons',(complete,err)=>{
                 try {
                     if(err){throw err};
-                    if(complete){}
+                    if(complete){
+                        document.getElementById('download').setAttribute('path',selectedBtn.getAttribute('path'));
+                        document.getElementById('rename').setAttribute('path',selectedBtn.getAttribute('path'));
+                        document.getElementById('delete').setAttribute('path',selectedBtn.getAttribute('path'));
+                    }
                 } catch (error) {
                     console.log(error);
                 }
@@ -117,7 +124,10 @@ document.getElementById('mainSection').addEventListener('contextmenu',(event)=>{
             changeSection('folderOptions.html','optionButtons',(complete,err)=>{
                 try {
                     if(err){throw err};
-                    if(complete){}
+                    if(complete){
+                        document.getElementById('rename').setAttribute('path',selectedBtn.getAttribute('path'));
+                        document.getElementById('delete').setAttribute('path',selectedBtn.getAttribute('path'));
+                    }
                 } catch (error) {
                     console.log(error);
                 }

@@ -190,7 +190,48 @@ ipcMain.on('upload',(event,operationInfo)=>{
   
 });
 ipcMain.on('download',(event,operationInfo)=>{
+  console.log('download ', operationInfo);
+  client.get('/download',{data : operationInfo,responseType : 'stream'})
+  .then((res)=>{
+    dialog.showOpenDialog({properties : ['openDirectory']})
+    .then(pathToSave =>{
+      if(!pathToSave.canceled){
+        let path = pathToSave.filePaths[0];
+        let writer = fs.createWriteStream(`${path}/${operationInfo.fileName}`);
+        console.log(typeof res.data);
 
+        res.data.pipe(writer);
+        
+        writer.on('finish',()=>{
+          event.reply('replyInPopUp',{
+            message : 'File Downloaded Successfully',
+            nature : 'success'
+          })
+        });
+        writer.on('error',(err)=>{
+          event.reply('replyInPopUp',{
+            message : 'Error In Downloading',
+            nature : 'error'
+          })
+        })
+      }
+    })
+    .catch(err =>{
+      event.reply('replyInPopUp',{
+        message : 'Error In Downloading',
+        nature : 'error'
+      })
+    })
+    
+  })
+  .catch(err =>{
+    console.log(err);
+    
+    event.reply('replyInPopUp',{
+      message : 'Error In Downloading',
+      nature : 'error'
+    })
+  })
 });
 ipcMain.on('delete',(event,operationInfo)=>{
 
